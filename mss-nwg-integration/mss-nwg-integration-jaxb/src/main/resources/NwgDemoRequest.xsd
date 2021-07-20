@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	targetNamespace="http://nwg/schema/NwgDemoRequest"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://nwg/schema/NwgDemoRequest"
+
+	elementFormDefault="qualified">
+
+	<!--<xs:import namespace="http://boibspoke/schema/CommonTypes"
+		schemaLocation="CommonTypes.xsd" />-->
+
+	<xs:element name="NwgDemoRequest">
+		<xs:complexType>
+            <xs:sequence>
+                <xs:element name = "company" type="xs:string"/>
+                <xs:element name = "DemoXsdType" type="xs:string"/>
+
+            </xs:sequence>
+
+			<!--<xs:choice>
+				<xs:element name="Success" type="xs:string">
+                    &lt;!&ndash;<xs:annotation>
+                    <xs:documentation>Block indicates a successful completion
+                    </xs:documentation>
+                </xs:annotation>&ndash;&gt;
+				</xs:element>
+
+			</xs:choice>-->
+		</xs:complexType>
+	</xs:element>
+	
+<!--	<xs:complexType name="SuccessType">
+		<xs:complexContent>
+			<xs:restriction base="xs:anyType" />
+		</xs:complexContent>
+	</xs:complexType>-->
+
+</xs:schema>

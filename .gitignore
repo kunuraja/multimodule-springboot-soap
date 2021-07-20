@@ -1,0 +1,13 @@
+# Add directories and files here which should not be part of source code control.
+ 
+# Build directories
+target
+
+# Eclipse IDE files
+.settings
+.classpath
+.project
+.idea
+dist/
+.factorypath
+*.iml

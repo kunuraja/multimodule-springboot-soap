@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>nwg</groupId>
+	<artifactId>mss-nwg-integration</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- Java version, encoding. -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<jdk.version>1.7</jdk.version>
+       <!-- <tomcat.version>7.0.59</tomcat.version>-->
+		<!-- Application dependencies -->
+		<log4j.version>2.11.2</log4j.version>
+		<spring.version>4.3.3.RELEASE</spring.version>
+		<!-- Unit test dependencies -->
+		<!--<junit.version>4.12</junit.version>-->
+		<!--<mockito.version>2.22.0</mockito.version>-->
+		<!--<assert-j.version>3.11.1</assert-j.version>-->
+		<!-- Automated code review tools -->
+		<!-- Checkstyle, code formatting check. -->
+		<maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+		<!--<maven.sevntu.checkstyle.plugin.version>1.27.0</maven.sevntu.checkstyle.plugin.version>-->
+		<!--<maven.sevntu-checkstyle-check.checkstyle.version>8.8</maven.sevntu-checkstyle-check.checkstyle.version>-->
+		<!-- Sonar Cube, code quality check. -->
+		<sonar.host.url>http://slnxmssacornsonar.duns.uk.ssg:8080</sonar.host.url>
+		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
+		<!-- Jacoco, unit test coverage check. -->
+		<!--<jacoco.maven.plugin.version>0.8.1</jacoco.maven.plugin.version>-->
+		<jacoco.coverage.ratio>1.00</jacoco.coverage.ratio>
+	</properties>
+
+	<dependencies>
+        <!--<Dependency for not using springboot starter log4j/>-->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>-->
+
+	<!--	<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>-->
+
+	<!--	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>-->
+
+	<!--&lt;!&ndash;	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>-->
+
+	<!--	<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assert-j.version}</version>
+			<scope>test</scope>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+        <!--<Adding for payload annotation>-->
+    <!--    <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+            <version>2.4.6.RELEASE</version>
+        </dependency>-->
+
+       <!-- <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>-->
+
+	</dependencies>
+
+	<modules>
+		<module>mss-nwg-integration-jaxb</module>
+		<module>mss-nwg-integration-code</module>
+		<module>dist</module>
+	</modules>
+	
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>http://slnxmssacornnexus.duns.uk.ssg:8081/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<url>http://slnxmssacornnexus.duns.uk.ssg:8081/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+</project>

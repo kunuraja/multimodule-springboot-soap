@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE=xml>
+<Configure status="DEBUG">
+
+	<!-- This file is specifically configured for minimal logging for all components -->
+
+	<Properties>
+		<Property name="LOG_DIR">C:/Users/rakumishra/Documents/BOI/NWG/logs/</Property>
+		<Property name="LOG_EXTENSION">.log</Property>
+	</Properties>
+
+	<Appenders>
+		<!-- This file will be used for application level logging specifically 
+			for the configuration component - for example, stack traces and error messages. -->
+		<RollingFile name="boiApplicationRollingFile"
+			fileName="${LOG_DIR}boi${LOG_EXTENSION}"
+			filePattern="${LOG_DIR}boi_%d{yyyy-MM-dd}${LOG_EXTENSION}">
+			<PatternLayout
+				pattern="%-5level | %d{DATE} | %tid | %logger{36}.%M() | %msg%n" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+
+		<!-- This file will be used for message level logging - for example, request 
+			messages and response messages. -->
+		<RollingFile name="boiMessageRollingFile"
+			fileName="${LOG_DIR}boi-messages${LOG_EXTENSION}"
+			filePattern="${LOG_DIR}boi-messages_%d{yyyy-MM-dd}${LOG_EXTENSION}">
+			<PatternLayout pattern="%d{DATE} %msg%n" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<!-- The root logger sets the log level for any loggers that are not specifically 
+			configured below. -->
+		<Root level="ERROR" additivity="false">
+			<AppenderRef ref="boiApplicationRollingFile" />
+		</Root>
+	</Loggers>
+</Configure>

@@ -1,0 +1,29 @@
+image: docker:latest
+
+# When using dind, it's wise to use the overlayfs driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+variables:
+  GIT_STRATEGY: fetch
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -U"
+
+codebuild:
+  image: maven:3.6-jdk-8
+  stage: build
+  script: 
+     - cd mss-boi-integration
+     - (if [[ "${CI_COMMIT_REF_NAME}" == "master" ]]; then mvn $MAVEN_CLI_OPTS clean verify; else mvn $MAVEN_CLI_OPTS clean verify; fi);
+     - echo Build complete
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID"
+    expire_in: 1 week
+    paths:
+      - ./mss-boi-integration/dist/target/*.zip

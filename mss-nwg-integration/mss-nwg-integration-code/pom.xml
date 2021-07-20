@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>nwg</groupId>
+	<artifactId>mss-nwg-integration-code</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<jdk.version>1.7</jdk.version>
+		<java.version>1.7</java.version>
+		<!-- Not required due to Servlet 3.x -->
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<!--<wildfly.elytron.version>1.9.1.Final</wildfly.elytron.version>-->
+		<spring.boot.version>1.5.22.RELEASE</spring.boot.version>
+        <!--<tomcat.version>7.0.59</tomcat.version>-->
+		<wsdl4j.version>1.6.2</wsdl4j.version>
+		<!--<junit.version>4.12</junit.version>-->
+		<!--<org.mockito.version>2.22.0</org.mockito.version>-->
+		<!--<org.assertj.version>3.13.2</org.assertj.version>-->
+		<!--<hibernate.version>5.2.9.Final</hibernate.version>-->
+		<!--<h2.database.version>1.4.189</h2.database.version>-->
+		<!--<ojdbc8.version>19.3.0.0</ojdbc8.version>-->
+		<!--<lombok.version>1.18.12</lombok.version>-->
+		<!-- Automated code review tools -->
+		<!-- Checkstyle, code formatting check. -->
+		<maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+		<!--<maven.sevntu.checkstyle.plugin.version>1.27.0</maven.sevntu.checkstyle.plugin.version>-->
+		<!--<maven.sevntu-checkstyle-check.checkstyle.version>8.8</maven.sevntu-checkstyle-check.checkstyle.version>-->
+		<!-- Sonar Cube, code quality check. -->
+		<sonar.host.url>http://slnxmssacornsonar.duns.uk.ssg:8080</sonar.host.url>
+		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
+		<!-- Jacoco, unit test coverage check. -->
+		<jacoco.maven.plugin.version>0.8.1</jacoco.maven.plugin.version>
+		<!-- TODO Low priority. Increase coverage to 1.00. -->
+		<jacoco.coverage.ratio>0.90</jacoco.coverage.ratio>
+        <!--<log4j.version>2.11.2</log4j.version>-->
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.5.22.RELEASE</version>
+			<exclusions>
+                <!--<springboot embedded tomcat excluded>-->
+				<!--<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>-->
+				<!-- Spring Boot uses Logback by default - we want Log4J. -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+				<!-- The application is deployed to JBoss EAP 7.1. Therefore, the Hibernate 
+					Validator must be downgraded. -->
+				<exclusion>
+					<groupId>org.hibernate.validator</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        <!--<dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;
+            <version>7.0.59</version>
+        </dependency>-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+			<version>1.5.22.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+        <!--<Dependency for not using springboot starter log4j/>-->
+        <!--<dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>-->
+
+	<!--	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>1.5.22.RELEASE</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+			<version>1.5.22.RELEASE</version>
+		</dependency>
+        <!--<springboot starter tomcat excluded>-->
+		<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>${spring.boot.version}</version>
+			<scope>provided</scope>
+		</dependency>-->
+
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>1.5.22.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>1.5.22.RELEASE</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+		<dependency>
+			<groupId>nwg</groupId>
+			<artifactId>mss-nwg-integration-jaxb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+
+
+		<!--<dependency>
+			<groupId>org.wildfly.security</groupId>
+			<artifactId>wildfly-elytron</artifactId>
+			<version>${wildfly.elytron.version}</version>
+		</dependency>
+
+		&lt;!&ndash;&ndash;&gt;
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>${ojdbc8.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		&lt;!&ndash;<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>&ndash;&gt;
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${org.mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${org.assertj.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			&lt;!&ndash; Note. This needs to be runtime scope when deployed to Spring Boot.
+				However, not required when deployed to JBoss. Therefore we may need profile 
+				for Boot to add, otherwise (default profile) do not add. &ndash;&gt;
+			<scope>test</scope>
+			<version>${h2.database.version}</version>
+		</dependency>-->
+
+	</dependencies>
+
+	<build>
+
+		<plugins>
+
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.22.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+				</configuration>
+			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.plugin.version}</version>
+				<dependencies>
+					<!--<dependency>
+						<groupId>com.github.sevntu-checkstyle</groupId>
+						<artifactId>sevntu-checkstyle-maven-plugin</artifactId>
+						<version>${maven.sevntu.checkstyle.plugin.version}</version>
+					</dependency>-->
+					<!--<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${maven.sevntu-checkstyle-check.checkstyle.version}</version>
+					</dependency>-->
+				</dependencies>
+				<!--<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>-->
+				<configuration>
+					<failsOnError>true</failsOnError>
+					<consoleOutput>true</consoleOutput>
+					<configLocation>../checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+
+			<!--<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonar.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>sonar</goal>
+						</goals>
+					</execution>
+				</executions>
+				&lt;!&ndash;<configuration>
+					<failsOnError>true</failsOnError>
+					<consoleOutput>true</consoleOutput>
+				</configuration>&ndash;&gt;
+			</plugin>-->
+
+			<!--<plugin>-->
+				<!--<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.maven.plugin.version}</version>-->
+				<!--<configuration>
+					<excludes>
+						<exclude>boi/configuration/DataSourceConfig.class</exclude>
+						<exclude>boi/configuration/DEClientConfiguration.class</exclude>
+						<exclude>boi/configuration/EnvironmentConfig.class</exclude>
+						<exclude>boi/configuration/LoggingConfig.class</exclude>
+						<exclude>boi/configuration/SecurityConfig.class</exclude>
+						<exclude>boi/configuration/ServiceConfig.class</exclude>
+						<exclude>boi/configuration/WebServiceConfig.class</exclude>
+						<exclude>boi/service/UnmarshallerServiceImpl.class</exclude>
+						<exclude>boi/webservice/endpoint/DateUtil.class</exclude>
+						<exclude>boi/configuration/encryption/CredentialStoreReaderImpl.class</exclude>
+						<exclude>boi/configuration/CustomValidationInterceptor.class</exclude>
+						<exclude>boi/dao/ApplicationDaoImpl.class</exclude>
+					</excludes>
+				</configuration>-->
+				<!--<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>INSTRUCTION</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${jacoco.coverage.ratio}</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>-->
+			<!--</plugin>-->
+
+		</plugins>
+
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>http://slnxmssacornnexus.duns.uk.ssg:8081/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<url>http://slnxmssacornnexus.duns.uk.ssg:8081/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+</project>
